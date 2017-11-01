@@ -2,9 +2,12 @@
 
 (require net/url racket/match json racket/file)
 (provide read-json/web read-json/file
-         (struct-out object))
+         (struct-out object)
+         (struct-out null))
 
 (define-struct object (members) #:transparent)
+(define-struct null () #:transparent)
+(define the-null (make-null))
 
 ; read-json/web : String -> JSExpr
 ; Retrieves the remote file at the given URL and returns JSON data
@@ -21,7 +24,8 @@
 ;; convert to a more student-friendly format
 (define (convert jsexpr)
   (match jsexpr
-    [(or 'null #t #f (? number?) (? string?)) jsexpr]
+    [(or #t #f (? number?) (? string?)) jsexpr]
+    ['null the-null]
     [(? list? l) (map convert jsexpr)]
     [(? hash? h)
      (make-object (hash-map h (lambda (k v) (list (symbol->string k)
