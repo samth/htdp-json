@@ -9,14 +9,14 @@
 (define-struct null () #:transparent)
 (define the-null (make-null))
 
-; read-json/web : String -> JSExpr
+; read-json/web : String -> JSON
 ; Retrieves the remote file at the given URL and returns JSON data
 (define (read-json/web url)
   (let-values ([(status header content)
                 (http-sendrecv/url (string->url url))])
     (convert (read-json content))))
 
-; read-json/file : String -> JSExpr
+; read-json/file : String -> JSON
 ; Retrieves the local file with the given name and returns JSON data
 (define (read-json/file file)
   (convert (string->jsexpr (file->string file))))
