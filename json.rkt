@@ -5,7 +5,7 @@
          (struct-out object)
          (struct-out null))
 
-(define-struct object (members) #:transparent)
+(define-struct object (entries) #:transparent)
 (define-struct null () #:transparent)
 (define the-null (make-null))
 
