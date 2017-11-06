@@ -1,10 +1,15 @@
 #lang scribble/manual
-@require[@for-label[htdp-json
-                    racket/base]]
+@require[@for-label[2htdp/json (except-in racket/base null? null) racket/contract/base]]
 
-@title{htdp-json}
-@author{samth}
+@title{htdp-json: A JSON library for use with HtDP}
+@author{Sam Tobin-Hochstadt}
 
-@defmodule[htdp-json]
+@defmodule[2htdp/json]
 
-Package Description Here
+@defproc[(read-json/web [url string?]) any/c]{Fetches JSON
+from the web.}
+
+@defproc[(read-json/file [filename string?]) any/c]{Parses JSON from
+the file system.}
+
+@defproc[(null? [v any/c]) boolean?]{Recognizes null elements in JSON.}
