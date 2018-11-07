@@ -3,11 +3,14 @@
 (require net/url racket/match json racket/file)
 (provide read-json/web read-json/file
          (struct-out object)
-         (struct-out null))
+         (struct-out null)
+         (struct-out member))
 
 (define-struct object (members) #:transparent)
 (define-struct null () #:transparent)
 (define the-null (make-null))
+
+(define-struct member (name value) #:transparent)
 
 ; read-json/web : String -> JSON
 ; Retrieves the remote file at the given URL and returns JSON data
@@ -28,5 +31,5 @@
     ['null the-null]
     [(? list? l) (map convert jsexpr)]
     [(? hash? h)
-     (make-object (hash-map h (lambda (k v) (list (symbol->string k)
-                                                  (convert v)))))]))
+     (make-object (hash-map h (lambda (k v) (make-member (symbol->string k)
+                                                         (convert v)))))]))
