@@ -3,13 +3,9 @@
 (require net/url racket/match json racket/file)
 (provide read-json/web read-json/file
          (struct-out object)
-         (struct-out null)
          (struct-out member))
 
 (define-struct object (members) #:transparent)
-(define-struct null () #:transparent)
-(define the-null (make-null))
-
 (define-struct member (name value) #:transparent)
 
 ; read-json/web : String -> JSON
@@ -27,8 +23,10 @@
 ;; convert to a more student-friendly format
 (define (convert jsexpr)
   (match jsexpr
-    [(or #t #f (? number?) (? string?)) jsexpr]
-    ['null the-null]
+    [(or (? number?) (? string?)) jsexpr]
+    ['null "null"]
+    [#t "true"]
+    [#f "false"]
     [(? list? l) (map convert jsexpr)]
     [(? hash? h)
      (make-object (hash-map h (lambda (k v) (make-member (symbol->string k)

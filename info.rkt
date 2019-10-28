@@ -5,5 +5,5 @@
                      "htdp-lib"))
 (define scribblings '(("scribblings/htdp-json.scrbl" ())))
 (define pkg-desc "Teaching library for JSON")
-(define version "0.0")
+(define version "0.1")
 (define pkg-authors '(samth))

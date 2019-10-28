@@ -11,5 +11,3 @@ from the web.}
 
 @defproc[(read-json/file [filename string?]) any/c]{Parses JSON from
 the file system.}
-
-@defproc[(null? [v any/c]) boolean?]{Recognizes null elements in JSON.}
