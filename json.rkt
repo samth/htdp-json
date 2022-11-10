@@ -12,7 +12,7 @@
 ; Retrieves the remote file at the given URL and returns JSON data
 (define (read-json/web url)
   (let-values ([(status header content)
-                (http-sendrecv/url (string->url url))])
+                (http-sendrecv/url (string->url url) #:headers '("Accept: */*"))])
     (convert (read-json content))))
 
 ; read-json/file : String -> JSON
