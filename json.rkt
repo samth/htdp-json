@@ -1,6 +1,7 @@
 #lang racket/base
 
-(require net/url racket/match json racket/file)
+(require (only-in net/http-easy get response-output)
+         racket/match json racket/file)
 (provide read-json/web read-json/file
          (struct-out object)
          (struct-out member))
@@ -11,9 +12,8 @@
 ; read-json/web : String -> JSON
 ; Retrieves the remote file at the given URL and returns JSON data
 (define (read-json/web url)
-  (let-values ([(status header content)
-                (http-sendrecv/url (string->url url) #:headers '("Accept: */*"))])
-    (convert (read-json content))))
+  (define res (get url #:stream? #t #:headers (hash 'Accept "*/*")))
+  (convert (read-json (response-output res))))
 
 ; read-json/file : String -> JSON
 ; Retrieves the local file with the given name and returns JSON data

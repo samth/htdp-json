@@ -1,6 +1,6 @@
 #lang info
 (define collection "2htdp")
-(define deps '("base"))
+(define deps '("base" "http-easy-lib"))
 (define build-deps '("scribble-lib" "racket-doc" "rackunit-lib"
                      "htdp-lib"))
 (define scribblings '(("scribblings/htdp-json.scrbl" ())))
